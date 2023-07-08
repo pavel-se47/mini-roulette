@@ -1,114 +1,48 @@
-function wheelOfFortune() {
-  const sectors = [
-    { color: '#008000', label: '0' },
-    { color: '#ff0000', label: '3' },
-    { color: '#000000', label: '1' },
-    { color: '#ff0000', label: '4' },
-    { color: '#000000', label: '6' },
-    { color: '#ff0000', label: '8' },
-    { color: '#000000', label: '2' },
-    { color: '#ff0000', label: '7' },
-    { color: '#000000', label: '5' },
-  ];
+import React, { useState, useEffect } from 'react';
 
-  // Generate random float in range min-max:
-  const rand = (m, M) => Math.random() * (M - m) + m;
+function WheelOfFortune() {
+  const [currentAngle, setCurrentAngle] = useState(0);
+  const [targetSector, setTargetSector] = useState(null);
+  const sectors = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+  const sectorAngle = 360 / sectors.length;
+  const targetSectorIndex = 4; // Индекс сектора, на котором нужно остановиться
 
-  const tot = sectors.length;
-  const elSpin = document.querySelector('#spin');
-  const ctx = document.querySelector('#wheel').getContext`2d`;
-  const dia = ctx.canvas.width;
-  const rad = dia / 2;
-  const PI = Math.PI;
-  const TAU = 2 * PI;
-  const arc = TAU / tot;
-  const friction = 0.991; // 0.995=soft, 0.99=mid, 0.98=hard
-  const angVelMin = 0.001; // Below that number will be treated as a stop
-  let angVelMax = 0; // Random ang.vel. to accelerate to
-  let angVel = 0; // Current angular velocity
-  let ang = 0; // Angle rotation in radians
-  let isSpinning = false;
-  let isAccelerating = false;
-  let animFrame = null; // Engine's requestAnimationFrame
-
-  //* Get index of current sector */
-  const getIndex = () => Math.floor(tot - (ang / TAU) * tot) % tot;
-
-  //* Draw sectors and prizes texts to canvas */
-  const drawSector = (sector, i) => {
-    const ang = arc * i;
-    ctx.save();
-    // COLOR
-    ctx.beginPath();
-    ctx.fillStyle = sector.color;
-    ctx.moveTo(rad, rad);
-    ctx.arc(rad, rad, rad, ang, ang + arc);
-    ctx.lineTo(rad, rad);
-    ctx.fill();
-    // TEXT
-    ctx.translate(rad, rad);
-    ctx.rotate(ang + arc / 2);
-    ctx.textAlign = 'right';
-    ctx.fillStyle = '#fff';
-    ctx.font = 'bold 30px sans-serif';
-    ctx.fillText(sector.label, rad - 10, 10);
-    //
-    ctx.restore();
+  const handleRotateClick = () => {
+    const targetAngle = sectorAngle * targetSectorIndex;
+    const newAngle = 360 * 3 + targetAngle;
+    setCurrentAngle(newAngle);
   };
 
-  //* CSS rotate CANVAS Element */
-  const rotate = () => {
-    const sector = sectors[getIndex()];
-    ctx.canvas.style.transform = `rotate(${ang - PI / 2}rad)`;
-    elSpin.textContent = !angVel ? 'SPIN' : sector.label;
-    elSpin.style.background = sector.color;
-  };
+  useEffect(() => {
+    if (currentAngle === 0) return;
 
-  const frame = () => {
-    if (!isSpinning) return;
+    const rotationTimeout = setTimeout(() => {
+      setTargetSector(sectors[targetSectorIndex]);
+    }, 3000);
 
-    if (angVel >= angVelMax) isAccelerating = false;
+    return () => clearTimeout(rotationTimeout);
+  }, [currentAngle, targetSectorIndex, sectors]);
 
-    // Accelerate
-    if (isAccelerating) {
-      angVel ||= angVelMin; // Initial velocity kick
-      angVel *= 1.06; // Accelerate
-    }
-
-    // Decelerate
-    else {
-      isAccelerating = false;
-      angVel *= friction; // Decelerate by friction
-
-      // SPIN END:
-      if (angVel < angVelMin) {
-        isSpinning = false;
-        angVel = 0;
-        cancelAnimationFrame(animFrame);
-      }
-    }
-
-    ang += angVel; // Update angle
-    ang %= TAU; // Normalize angle
-    rotate(); // CSS rotate!
-  };
-
-  const engine = () => {
-    frame();
-    animFrame = requestAnimationFrame(engine);
-  };
-
-  elSpin.addEventListener('click', () => {
-    if (isSpinning) return;
-    isSpinning = true;
-    isAccelerating = true;
-    angVelMax = rand(0.25, 0.4);
-    engine(); // Start engine!
-  });
-
-  // INIT!
-  sectors.forEach(drawSector);
-  rotate(); // Initial rotation
+  return (
+    <div className="wheel-container">
+      <div
+        className="wheel"
+        style={{ transform: `rotate(${currentAngle}deg)` }}
+      >
+        {sectors.map((sector, index) => (
+          <div className="sector" key={index}>
+            {sector}
+          </div>
+        ))}
+      </div>
+      <button className="rotate-button" onClick={handleRotateClick}>
+        Вращать
+      </button>
+      {targetSector && (
+        <div className="result">Выпал сектор: {targetSector}</div>
+      )}
+    </div>
+  );
 }
 
-export default wheelOfFortune;
+export default WheelOfFortune;
