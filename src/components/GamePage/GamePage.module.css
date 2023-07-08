@@ -2,7 +2,7 @@
   display: flex;
   justify-content: center;
   flex-direction: column;
-  margin-top: 30px;
+  margin-top: 20px;
 }
 
 .groupZone {
@@ -107,15 +107,48 @@
   margin-left: auto;
   margin-right: auto;
   width: 540px;
-  margin-top: 30px;
+  margin-top: 20px;
   background-color: #f1f1f1;
   padding: 20px;
   box-sizing: border-box;
 }
 
+.containerLimit {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-left: auto;
+  margin-right: auto;
+  width: 540px;
+  margin-top: 20px;
+  background-color: #f1f1f1;
+  padding: 10px;
+  box-sizing: border-box;
+}
+
+.groupZoneLimit {
+  display: flex;
+  justify-content: space-around;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+h2 {
+  font-size: 22px;
+  padding: 0;
+  margin: 0;
+}
+
+.numbers,
+.colors {
+  font-size: 18px;
+  text-align: center;
+}
+
 .label {
   font-size: 18px;
   font-weight: bold;
+  width: 110px;
   text-align: center;
   margin-left: 10px;
   margin-right: 10px;
@@ -140,7 +173,7 @@
   display: flex;
   justify-content: center;
   text-decoration: none;
-  margin-top: 30px;
+  margin-top: 20px;
   margin-left: auto;
   margin-right: auto;
   padding: 10px;
@@ -166,7 +199,6 @@
   margin-top: 20px;
   margin-left: auto;
   margin-right: auto;
-  /* padding: 10px; */
   text-align: center;
   width: 60px;
   height: 60px;
@@ -178,6 +210,23 @@
   transition: all 250ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 
+.chip {
+  display: flex;
+  justify-content: center;
+  color: #fff;
+  border: 2px solid transparent;
+  background-color: transparent;
+  border-radius: 50%;
+}
+
 .green {
-  color: green;
+  background-color: green;
+}
+
+.red {
+  background-color: red;
+}
+
+.black {
+  background-color: black;
 }

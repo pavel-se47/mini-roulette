@@ -15,10 +15,40 @@ export default function GamePage() {
   const [valueWheel, setValueWheel] = useState(null);
   const [valueChip, setValueChip] = useState([]);
   const [win, setWin] = useState(0);
+  const [placeholder, setPlaceholder] = useState('');
+  const [limit, setLimit] = useState(0);
+  const [buttonDisabled, setButtonDisabled] = useState(false);
 
-  // const spinButton = document.getElementById('spin');
   const valueObjectChip = valueChip.map(object => object.value);
   const colorObjectChip = valueChip.map(object => object.color);
+
+  useEffect(() => {
+    if (valueChip.length === 0) {
+      setPlaceholder('Your bet');
+    } else if (valueChip.length > 0) {
+      if (
+        valueObjectChip.includes('All black') ||
+        valueObjectChip.includes('All red')
+      ) {
+        setLimit(prevLimit => {
+          const newLimit = prevLimit + 100;
+          setPlaceholder(newLimit);
+          console.log(newLimit);
+          return newLimit;
+        });
+        return;
+      } else {
+        setLimit(prevLimit => {
+          const newLimit = prevLimit + 20;
+          setPlaceholder(newLimit);
+          console.log(newLimit);
+          return newLimit;
+        });
+        return;
+      }
+    }
+    // eslint-disable-next-line
+  }, [valueChip]);
 
   useEffect(() => {
     if (!valueWheel) {
@@ -39,7 +69,7 @@ export default function GamePage() {
           });
           if (valueObjectChip.includes(valueWheel?.value.toString())) {
             setBalance(balance + bet * 8);
-            setWin(bet * 8);
+            setWin(prevBet => prevBet + bet * 8);
             success({
               title: 'Congratulations! You Win!',
               text: `You win ${bet * 8} credits!`,
@@ -47,6 +77,48 @@ export default function GamePage() {
               hide: true,
               width: '400px',
             });
+          }
+          setButtonDisabled(false);
+          return;
+        }
+        setBalance(balance - bet);
+        setWin(0);
+        error({
+          title: 'Sorry, you lost :(',
+          text: `You lost ${bet} credits!`,
+          delay: 1000,
+          hide: true,
+          width: '400px',
+        });
+        return;
+      }
+    }
+
+    setButtonDisabled(false);
+
+    if (valueObjectChip.includes('All red')) {
+      if (valueWheel.color === 'red') {
+        if (colorObjectChip.includes(valueWheel?.color.toString())) {
+          setBalance(balance + bet * 2);
+          setWin(bet * 2);
+          success({
+            title: 'Congratulations! You Win!',
+            text: `You win ${bet * 2} credits!`,
+            delay: 1000,
+            hide: true,
+            width: '400px',
+          });
+          if (valueObjectChip.includes(valueWheel?.value.toString())) {
+            setBalance(balance + bet * 8);
+            setWin(prevBet => prevBet + bet * 8);
+            success({
+              title: 'Congratulations! You Win!',
+              text: `You win ${bet * 8} credits!`,
+              delay: 1000,
+              hide: true,
+              width: '400px',
+            });
+            setButtonDisabled(false);
           }
           return;
         }
@@ -63,43 +135,7 @@ export default function GamePage() {
       }
     }
 
-    if (valueObjectChip.includes('All red')) {
-      if (valueWheel.color === 'red') {
-        if (colorObjectChip.includes(valueWheel?.color.toString())) {
-          setBalance(balance + bet * 2);
-          setWin(bet * 2);
-          success({
-            title: 'Congratulations! You Win!',
-            text: `You win ${bet * 2} credits!`,
-            delay: 1000,
-            hide: true,
-            width: '400px',
-          });
-          if (valueObjectChip.includes(valueWheel?.value.toString())) {
-            setBalance(balance + bet * 8);
-            setWin(bet * 8);
-            success({
-              title: 'Congratulations! You Win!',
-              text: `You win ${bet * 8} credits!`,
-              delay: 1000,
-              hide: true,
-              width: '400px',
-            });
-          }
-          return;
-        }
-        setBalance(balance - bet);
-        setWin(0);
-        error({
-          title: 'Sorry, you lost :(',
-          text: `You lost ${bet} credits!`,
-          delay: 1000,
-          hide: true,
-          width: '400px',
-        });
-        return;
-      }
-    }
+    setButtonDisabled(false);
 
     if (!valueObjectChip.includes(valueWheel?.value.toString())) {
       setBalance(balance - bet);
@@ -124,12 +160,26 @@ export default function GamePage() {
       return;
     }
 
-    // spinButton.disabled = false;
+    setButtonDisabled(false);
+
     // eslint-disable-next-line
   }, [valueWheel]);
 
   const betChange = e => {
-    setBet(Number(e.currentTarget.value));
+    if (Number(e.currentTarget.value > limit)) {
+      alert({
+        title: 'Bet limit exceeded!',
+        delay: 1000,
+        hide: true,
+        width: '400px',
+      });
+      setBet([]);
+      setPlaceholder(limit);
+      setButtonDisabled(true);
+    } else {
+      setButtonDisabled(false);
+      setBet(Number(e.currentTarget.value));
+    }
   };
 
   const onSetChip = e => {
@@ -140,6 +190,7 @@ export default function GamePage() {
         hide: true,
         width: '400px',
       });
+
       return;
     }
     setValueChip(prevValueChip => [
@@ -149,9 +200,21 @@ export default function GamePage() {
     setValueWheel(null);
   };
 
-  const valueChipToString = valueChip.map(object => object.value).join(', ');
+  const valueChipRender = valueChip.map(object => (
+    <div
+      className={`${styles.chip} ${
+        object.color === 'green' ? styles.green : ''
+      } ${object.color === 'black' ? styles.black : ''} ${
+        object.color === 'red' ? styles.red : ''
+      }`}
+    >
+      {object.value}
+    </div>
+  ));
 
   const spin = () => {
+    setButtonDisabled(true);
+
     if (balance === 0) {
       alert({
         title: 'Top up your balance to continue playing!',
@@ -159,6 +222,7 @@ export default function GamePage() {
         hide: true,
         width: '400px',
       });
+      setButtonDisabled(false);
       return;
     }
 
@@ -170,6 +234,7 @@ export default function GamePage() {
         width: '400px',
       });
       setBet(0);
+      setButtonDisabled(false);
       return;
     }
 
@@ -180,6 +245,7 @@ export default function GamePage() {
         hide: true,
         width: '400px',
       });
+      setButtonDisabled(false);
       return;
     }
 
@@ -190,47 +256,69 @@ export default function GamePage() {
         hide: true,
         width: '400px',
       });
+      setButtonDisabled(false);
       return;
     }
 
-    // spinButton.disabled = true;
-    // setValueWheel(Math.floor(Math.random() * (9 - 0) + 0).toString());
-
     const randomNumber = Math.floor(Math.random() * (9 - 0) + 0);
-    if (randomNumber === 0) {
-      setValueWheel({ value: randomNumber, color: 'green' });
-    } else if (
-      randomNumber === 3 ||
-      randomNumber === 4 ||
-      randomNumber === 8 ||
-      randomNumber === 7
-    ) {
-      setValueWheel({ value: randomNumber, color: 'red' });
-    } else if (
-      randomNumber === 1 ||
-      randomNumber === 2 ||
-      randomNumber === 5 ||
-      randomNumber === 6
-    ) {
-      setValueWheel({ value: randomNumber, color: 'black' });
-    }
+
+    setTimeout(() => {
+      if (randomNumber === 0) {
+        setValueWheel({ value: randomNumber, color: 'green' });
+      } else if (
+        randomNumber === 3 ||
+        randomNumber === 4 ||
+        randomNumber === 8 ||
+        randomNumber === 7
+      ) {
+        setValueWheel({ value: randomNumber, color: 'red' });
+      } else if (
+        randomNumber === 1 ||
+        randomNumber === 2 ||
+        randomNumber === 5 ||
+        randomNumber === 6
+      ) {
+        setValueWheel({ value: randomNumber, color: 'black' });
+      }
+    }, 2000);
+
+    // if (randomNumber === 0) {
+    //   setValueWheel({ value: randomNumber, color: 'green' });
+    // } else if (
+    //   randomNumber === 3 ||
+    //   randomNumber === 4 ||
+    //   randomNumber === 8 ||
+    //   randomNumber === 7
+    // ) {
+    //   setValueWheel({ value: randomNumber, color: 'red' });
+    // } else if (
+    //   randomNumber === 1 ||
+    //   randomNumber === 2 ||
+    //   randomNumber === 5 ||
+    //   randomNumber === 6
+    // ) {
+    //   setValueWheel({ value: randomNumber, color: 'black' });
+    // }
   };
 
   const clearChip = () => {
     setValueChip([]);
     setValueWheel(null);
+    setBet('');
+    setLimit(0);
+    setPlaceholder('Your bet');
   };
-
-  // console.log(valueWheel?.value);
-  // console.log(valueWheel);
-  // console.log(valueChip);
-  // console.log(colorObjectChip);
 
   return (
     <>
       <div className={styles.valueWheel}>{valueWheel?.value}</div>
 
-      <button className={styles.startGame} id="spin" onClick={spin}>
+      <button
+        className={styles.startGame}
+        id="spin"
+        onClick={spin}
+        disabled={buttonDisabled}
+      >
         SPIN
       </button>
 
@@ -246,10 +334,11 @@ export default function GamePage() {
             <input
               type="number"
               min={0}
+              max={limit}
               name="bet"
               className={styles.input}
               value={bet}
-              placeholder="Your bet"
+              placeholder={placeholder}
               onChange={betChange}
             />
           </label>
@@ -257,7 +346,7 @@ export default function GamePage() {
 
         <div className={styles.label}>
           Your Chip:
-          <div className={styles.value}>{valueChipToString}</div>
+          <div className={styles.value}>{valueChipRender}</div>
         </div>
 
         <div className={styles.label}>
@@ -265,6 +354,20 @@ export default function GamePage() {
           <div className={styles.value}>{win}</div>
         </div>
       </div>
+
+      {/* <div className={styles.containerLimit}>
+        <h2>Limits colors bet</h2>
+        <div className={styles.groupZoneLimit}>
+          <div className={styles.colors}>max 100 credits</div>
+        </div>
+      </div>
+
+      <div className={styles.containerLimit}>
+        <h2>Limits numbers bet</h2>
+        <div className={styles.groupZoneLimit}>
+          <div className={styles.numbers}>max 20 credits</div>
+        </div>
+      </div> */}
 
       <button className={styles.startGame} onClick={clearChip}>
         CLEAR CHIP
