@@ -25,7 +25,8 @@
   transition: all 250ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.greenZone:hover {
+.greenZone:hover,
+.greenZone:focus {
   transform: scale(1.15);
 }
 
@@ -44,7 +45,8 @@
   transition: all 250ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.redZone:hover {
+.redZone:hover,
+.redZone:focus {
   transform: scale(1.15);
 }
 
@@ -63,7 +65,8 @@
   transition: all 250ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.blackZone:hover {
+.blackZone:hover,
+.blackZone:focus {
   transform: scale(1.15);
 }
 
@@ -82,7 +85,8 @@
   transition: all 250ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.allBlackZone:hover {
+.allBlackZone:hover,
+.allBlackZone:focus {
   transform: scale(1.15);
 }
 
@@ -101,7 +105,8 @@
   transition: all 250ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.allRedZone:hover {
+.allRedZone:hover,
+.allRedZone:focus {
   transform: scale(1.15);
 }
 
@@ -184,11 +189,11 @@ h2 {
   margin-left: auto;
   margin-right: auto;
   padding: 10px;
-  min-width: 160px;
+  min-width: 140px;
   border: 2px solid red;
   border-radius: 8px;
   font-weight: 600;
-  font-size: 30px;
+  font-size: 22px;
   color: red;
   transition: all 250ms cubic-bezier(0.4, 0, 0.2, 1);
 }
@@ -254,7 +259,7 @@ h2 {
   align-items: center;
   width: 50px;
   height: 50px;
-  margin-bottom: 5px;
+  margin-bottom: 6px;
   margin-right: auto;
   margin-left: auto;
   color: #fff;
@@ -266,12 +271,13 @@ h2 {
   transition: all 250ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.bet:hover {
+.bet:hover,
+.bet:focus {
   transform: scale(1.15);
 }
 
 .bet10 {
-  background-color: skyblue;
+  background-color: darkorchid;
 }
 
 .bet20 {
@@ -279,15 +285,15 @@ h2 {
 }
 
 .bet50 {
-  background-color: tomato;
+  background-color: turquoise;
 }
 
 .bet100 {
-  background-color: slateblue;
+  background-color: chartreuse;
 }
 
 .bet150 {
-  background-color: turquoise;
+  background-color: darkkhaki;
 }
 
 .betChipZone {
@@ -298,9 +304,9 @@ h2 {
 }
 
 .activeBet {
-  scale: 1.15;
-  color: indigo;
-  border: 2px solid indigo;
+  scale: 1.2;
+  color: black;
+  border: 2px solid black;
 }
 
 .betOnChip {
@@ -310,11 +316,49 @@ h2 {
   align-items: center;
   top: 0;
   left: 0;
-  width: 22px;
-  height: 22px;
-  color: indigo;
-  border: 2px solid indigo;
-  font-size: 14px;
+  width: 25px;
+  height: 25px;
+  font-size: 12px;
   border-radius: 50%;
   transition: all 250ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.timer {
+  display: flex;
+  justify-content: center;
+  font-weight: 700;
+}
+
+.autoStart {
+  display: flex;
+  justify-content: center;
+  text-decoration: none;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 10px;
+  min-width: 140px;
+  border: 2px solid red;
+  border-radius: 8px;
+  font-size: 22px;
+  color: red;
+  transition: all 250ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.autoStart:hover,
+.autoStart:focus {
+  color: black;
+  border-color: black;
+}
+
+.buttonDisabled {
+  scale: 1;
+  color: white;
+  background-color: lightgray;
+  border-color: lightgray;
+  cursor: default;
+}
+
+.buttonDisabled:hover,
+.buttonDisabled:focus {
+  transform: scale(1);
 }
