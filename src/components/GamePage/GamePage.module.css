@@ -118,7 +118,7 @@
   width: 540px;
   margin-top: 20px;
   background-color: #f1f1f1;
-  padding: 20px;
+  padding: 10px;
   box-sizing: border-box;
 }
 
@@ -185,7 +185,6 @@ h2 {
   display: flex;
   justify-content: center;
   text-decoration: none;
-  margin-top: 20px;
   margin-left: auto;
   margin-right: auto;
   padding: 10px;
@@ -193,7 +192,7 @@ h2 {
   border: 2px solid red;
   border-radius: 8px;
   font-weight: 600;
-  font-size: 22px;
+  font-size: 20px;
   color: red;
   transition: all 250ms cubic-bezier(0.4, 0, 0.2, 1);
 }
@@ -281,7 +280,7 @@ h2 {
 }
 
 .bet20 {
-  background-color: teal;
+  background-color: cyan;
 }
 
 .bet50 {
@@ -324,22 +323,24 @@ h2 {
 }
 
 .timer {
-  display: flex;
-  justify-content: center;
+  align-self: center;
+  padding: 0;
+  margin: 0;
   font-weight: 700;
 }
 
 .autoStart {
   display: flex;
   justify-content: center;
+  align-self: center;
   text-decoration: none;
   margin-left: auto;
   margin-right: auto;
-  padding: 10px;
+  padding: 10px 5px;
   min-width: 140px;
   border: 2px solid red;
   border-radius: 8px;
-  font-size: 22px;
+  font-size: 18px;
   color: red;
   transition: all 250ms cubic-bezier(0.4, 0, 0.2, 1);
 }
@@ -355,10 +356,253 @@ h2 {
   color: white;
   background-color: lightgray;
   border-color: lightgray;
-  cursor: default;
+  transform: scale(1);
+  background: lightgray;
+  cursor: not-allowed;
 }
 
 .buttonDisabled:hover,
 .buttonDisabled:focus {
   transform: scale(1);
+  cursor: not-allowed;
 }
+
+.wheelOfFortune {
+  display: inline-flex;
+  margin-top: 5px;
+  left: 50%;
+  transform: translateX(-50%);
+  position: relative;
+  overflow: hidden;
+}
+
+.component {
+  display: flex;
+  position: relative;
+  margin-left: auto;
+  margin-right: auto;
+  width: 300px;
+  height: 300px;
+  background: white;
+  overflow: hidden;
+  border-radius: 50%;
+  transition: 5s;
+}
+
+.option {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border-radius: 50%;
+  border: 10px solid whitesmoke;
+  clip-path: polygon(50% 50%, 100% 0, 100% 100%);
+}
+
+.num0 {
+  color: #fff;
+  font: 1.5rem/0 sans-serif;
+  font-weight: 700;
+  position: absolute;
+  top: 83%;
+  right: 25%;
+  z-index: 1;
+}
+
+.num1 {
+  color: #fff;
+  font: 1.5rem/0 sans-serif;
+  font-weight: 700;
+  position: absolute;
+  top: 78%;
+  right: 75%;
+  z-index: 1;
+}
+
+.num2 {
+  color: #fff;
+  font: 1.5rem/0 sans-serif;
+  font-weight: 700;
+  position: absolute;
+  top: 15%;
+  right: 30%;
+  z-index: 1;
+}
+
+.num3 {
+  color: #fff;
+  font: 1.5rem/0 sans-serif;
+  font-weight: 700;
+  position: absolute;
+  top: 90%;
+  right: 50%;
+  z-index: 1;
+}
+
+.num4 {
+  color: #fff;
+  font: 1.5rem/0 sans-serif;
+  font-weight: 700;
+  position: absolute;
+  top: 53%;
+  right: 88%;
+  z-index: 1;
+}
+
+.num5 {
+  color: #fff;
+  font: 1.5rem/0 sans-serif;
+  font-weight: 700;
+  position: absolute;
+  top: 60%;
+  right: 8%;
+  z-index: 1;
+}
+
+.num6 {
+  color: #fff;
+  font: 1.5rem/0 sans-serif;
+  font-weight: 700;
+  position: absolute;
+  top: 27%;
+  right: 81%;
+  z-index: 1;
+}
+
+.num7 {
+  color: #fff;
+  font: 1.5rem/0 sans-serif;
+  font-weight: 700;
+  position: absolute;
+  top: 35%;
+  right: 10%;
+  z-index: 1;
+}
+
+.num8 {
+  color: #fff;
+  font: 1.5rem/0 sans-serif;
+  font-weight: 700;
+  position: absolute;
+  top: 12%;
+  right: 57%;
+  z-index: 1;
+}
+
+.option.option1 {
+  transform: rotate(0deg);
+  background: red;
+}
+
+.option.option2 {
+  transform: rotate(40deg);
+  background: black;
+}
+
+.option.option3 {
+  transform: rotate(80deg);
+  background: green;
+}
+
+.option.option4 {
+  transform: rotate(120deg);
+  background: red;
+}
+
+.option.option5 {
+  transform: rotate(160deg);
+  background: black;
+}
+
+.option.option6 {
+  transform: rotate(200deg);
+  background: red;
+}
+
+.option.option7 {
+  transform: rotate(240deg);
+  background: black;
+}
+
+.option.option8 {
+  transform: rotate(280deg);
+  background: red;
+}
+
+.option.option9 {
+  transform: rotate(320deg);
+  background: black;
+  clip-path: polygon(100% 0%, 100% 0%, 50% 50%, 100% 50%);
+}
+
+.spin {
+  font: 1.5rem sans-serif;
+  font-weight: 700;
+  user-select: none;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 30%;
+  height: 30%;
+  margin: -15%;
+  background-color: gold;
+  color: #fff;
+  box-shadow: 0 0 0 8px currentColor, 0 0px 15px 5px rgba(0, 0, 0, 0.6);
+  border-radius: 50%;
+  transition: 1s;
+}
+
+.spin::after {
+  content: '';
+  position: absolute;
+  top: -17px;
+  border: 10px solid transparent;
+  border-bottom-color: currentColor;
+  border-top: none;
+}
+
+.spin:hover,
+.spin:focus {
+  transform: scale(1.1);
+}
+
+.spinButtonDisabled {
+  background: lightgray;
+  cursor: not-allowed;
+}
+
+.spinButtonDisabled:hover,
+.spinButtonDisabled:focus {
+  transform: scale(1);
+  cursor: not-allowed;
+}
+
+.green {
+  background-color: green;
+}
+
+.red {
+  background-color: red;
+}
+
+.black {
+  background-color: black;
+}
+
+/* @keyframes rotation {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.componentRotate {
+  animation: rotation 5s linear infinite;
+} */

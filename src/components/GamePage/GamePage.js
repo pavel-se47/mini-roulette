@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import styles from './GamePage.module.css';
-// import WheelOfFortune from './WheelOfFortune';
 
 import { alert, info, error, success, defaultModules } from '@pnotify/core';
 import '@pnotify/core/dist/PNotify.css';
@@ -11,7 +10,7 @@ import '@pnotify/core/dist/BrightTheme.css';
 defaultModules.set(PNotifyMobile, {});
 
 export default function GamePage() {
-  const [balance, setBalance] = useState(20);
+  const [balance, setBalance] = useState(1000);
   const [bet, setBet] = useState(20);
   const [valueWheel, setValueWheel] = useState(null);
   const [valueChip, setValueChip] = useState([]);
@@ -19,8 +18,9 @@ export default function GamePage() {
   // eslint-disable-next-line no-unused-vars
   const [limit, setLimit] = useState(20);
   const [buttonDisabled, setButtonDisabled] = useState(false);
-  const [timer, setTimer] = useState(5);
+  const [timer, setTimer] = useState(30);
   const [autoStart, setAutoStart] = useState(false);
+  const [rotation, setRotation] = useState(null);
   const [activeBet, setActiveBet] = useState({
     10: 'disabled',
     20: 'active',
@@ -28,10 +28,6 @@ export default function GamePage() {
     100: 'disabled',
     150: 'disabled',
   });
-
-  useEffect(() => {
-    console.log(valueChip);
-  }, [valueChip]);
 
   const generalBet = valueChip.map(object => object.currentBet);
   let generalBetSum = 0;
@@ -45,7 +41,7 @@ export default function GamePage() {
         setTimer(prevTimer => {
           if (prevTimer === 1) {
             spin();
-            return 5;
+            return 30;
           }
           return prevTimer - 1;
         });
@@ -62,6 +58,7 @@ export default function GamePage() {
     if (!valueWheel) {
       return;
     }
+
     if (autoStart) {
       setBalance(prevBalance => prevBalance - generalBetSum);
       if (balance === 0 && balance < bet) {
@@ -209,6 +206,37 @@ export default function GamePage() {
     // eslint-disable-next-line
   }, [valueWheel]);
 
+  const setDegValue = value => {
+    if (value === 0) {
+      setRotation(570);
+      return;
+    } else if (value === 1) {
+      setRotation(490);
+      return;
+    } else if (value === 2) {
+      setRotation(690);
+      return;
+    } else if (value === 3) {
+      setRotation(530);
+      return;
+    } else if (value === 4) {
+      setRotation(450);
+      return;
+    } else if (value === 5) {
+      setRotation(610);
+      return;
+    } else if (value === 6) {
+      setRotation(410);
+      return;
+    } else if (value === 7) {
+      setRotation(650);
+      return;
+    } else if (value === 8) {
+      setRotation(370);
+      return;
+    }
+  };
+
   const onSetBet = e => {
     setBet(Number(e.target.innerText));
     onSetActiveBet(e.target.innerText);
@@ -304,6 +332,7 @@ export default function GamePage() {
       setBalance(prevBalance => prevBalance - bet);
       setValueWheel(null);
     }
+    setButtonDisabled(false);
   };
 
   const spin = () => {
@@ -316,6 +345,7 @@ export default function GamePage() {
         hide: true,
         width: '400px',
       });
+      setButtonDisabled(false);
       return;
     }
 
@@ -326,6 +356,7 @@ export default function GamePage() {
         hide: true,
         width: '400px',
       });
+      setButtonDisabled(false);
       return;
     }
 
@@ -336,11 +367,12 @@ export default function GamePage() {
         hide: true,
         width: '400px',
       });
+      setButtonDisabled(false);
       setBet(0);
       return;
     }
 
-    const randomNumber = Math.floor(Math.random() * (9 - 0) + 0);
+    const randomNumber = Math.floor(Math.random() * (8 - 0) + 0);
 
     setTimeout(() => {
       if (randomNumber === 0) {
@@ -360,7 +392,9 @@ export default function GamePage() {
       ) {
         setValueWheel({ value: randomNumber, color: 'black' });
       }
-    }, 2000);
+    }, 3000);
+
+    setDegValue(randomNumber);
   };
 
   const clearChip = () => {
@@ -412,39 +446,274 @@ export default function GamePage() {
   ));
 
   return (
-    <>
-      {/* <WheelOfFortune value={valueWheel} /> */}
+    <div className={styles.allPage}>
+      <div className={styles.wheelOfFortune}>
+        <div
+          className={styles.component}
+          style={
+            buttonDisabled
+              ? {
+                  transform: `rotate(${rotation}deg)`,
+                  transition: 'transform 3s ease-in-out',
+                }
+              : null
+          }
+        >
+          <span id="num0" className={styles.num0}>
+            0
+          </span>
+          <span id="num3" className={styles.num3}>
+            3
+          </span>
+          <span id="num1" className={styles.num1}>
+            1
+          </span>
+          <span id="num4" className={styles.num4}>
+            4
+          </span>
+          <span id="num6" className={styles.num6}>
+            6
+          </span>
+          <span id="num8" className={styles.num8}>
+            8
+          </span>
+          <span id="num2" className={styles.num2}>
+            2
+          </span>
+          <span id="num7" className={styles.num7}>
+            7
+          </span>
+          <span id="num5" className={styles.num5}>
+            5
+          </span>
 
-      <div className={styles.valueWheel}>{valueWheel?.value}</div>
+          <div className={`${styles.option} ${styles.option1}`}>0</div>
+          <div className={`${styles.option} ${styles.option2}`}>1</div>
+          <div className={`${styles.option} ${styles.option3}`}>2</div>
+          <div className={`${styles.option} ${styles.option4}`}>3</div>
+          <div className={`${styles.option} ${styles.option5}`}>4</div>
+          <div className={`${styles.option} ${styles.option6}`}>5</div>
+          <div className={`${styles.option} ${styles.option7}`}>6</div>
+          <div className={`${styles.option} ${styles.option8}`}>7</div>
+          <div className={`${styles.option} ${styles.option9}`}>8</div>
+        </div>
+        <button
+          type="button"
+          id="spin"
+          onClick={spin}
+          disabled={buttonDisabled}
+          className={`${styles.spin} ${
+            buttonDisabled ? styles.spinButtonDisabled : null
+          } ${valueWheel?.color === 'green' ? styles.green : null} ${
+            valueWheel?.color === 'red' ? styles.red : null
+          } ${valueWheel?.color === 'black' ? styles.black : null}`}
+        >
+          {valueWheel?.value || valueWheel?.value === 0
+            ? valueWheel?.value
+            : 'SPIN'}
+        </button>
+      </div>
+      <div>
+        <div className={styles.container}>
+          <div className={styles.label}>
+            Your balance:
+            <div className={styles.value}>{balance}</div>
+          </div>
 
+          <div className={styles.label}>
+            Your current bet:
+            <div className={styles.value}>{!bet ? '-' : bet}</div>
+          </div>
+
+          <div className={styles.label}>
+            Your current win:
+            <div className={styles.value}>{!win ? '-' : win}</div>
+          </div>
+        </div>
+
+        <div className={styles.gameField}>
+          <div className={styles.betZone}>
+            Your bet:
+            <div
+              className={`${styles.bet} ${styles.bet10} ${
+                activeBet[10] === 'active' ? styles.activeBet : null
+              } ${buttonDisabled ? styles.buttonDisabled : null}`}
+              disabled={buttonDisabled}
+              onClick={onSetBet}
+            >
+              10
+            </div>
+            <div
+              className={`${styles.bet} ${styles.bet20}  ${
+                activeBet[20] === 'active' ? styles.activeBet : null
+              } ${buttonDisabled ? styles.buttonDisabled : null}`}
+              disabled={buttonDisabled}
+              onClick={onSetBet}
+            >
+              20
+            </div>
+            <div
+              className={`${styles.bet} ${styles.bet50}  ${
+                activeBet[50] === 'active' ? styles.activeBet : null
+              } ${buttonDisabled ? styles.buttonDisabled : null}`}
+              disabled={buttonDisabled}
+              onClick={onSetBet}
+            >
+              50
+            </div>
+            <div
+              className={`${styles.bet} ${styles.bet100}  ${
+                activeBet[100] === 'active' ? styles.activeBet : null
+              } ${buttonDisabled ? styles.buttonDisabled : null}`}
+              disabled={buttonDisabled}
+              onClick={onSetBet}
+            >
+              100
+            </div>
+            <div
+              className={`${styles.bet} ${styles.bet150}  ${
+                activeBet[150] === 'active' ? styles.activeBet : null
+              } ${buttonDisabled ? styles.buttonDisabled : null}`}
+              disabled={buttonDisabled}
+              onClick={onSetBet}
+            >
+              150
+            </div>
+          </div>
+          <div className={styles.betChipZone}>
+            Chip zone
+            <div className={styles.groupZone}>
+              <div
+                className={`${styles.greenZone} ${
+                  buttonDisabled ? styles.buttonDisabled : null
+                }`}
+                id="green"
+                disabled={buttonDisabled}
+                onClick={onSetChip}
+              >
+                {betOnChipRender.filter(item => item.key === '0')}0
+              </div>
+              <div
+                className={`${styles.redZone} ${
+                  buttonDisabled ? styles.buttonDisabled : null
+                }`}
+                id="red"
+                disabled={buttonDisabled}
+                onClick={onSetChip}
+              >
+                {betOnChipRender.filter(item => item.key === '3')}3
+              </div>
+              <div
+                className={`${styles.blackZone} ${
+                  buttonDisabled ? styles.buttonDisabled : null
+                }`}
+                id="black"
+                disabled={buttonDisabled}
+                onClick={onSetChip}
+              >
+                {betOnChipRender.filter(item => item.key === '1')}1
+              </div>
+            </div>
+            <div className={styles.groupZone}>
+              <div
+                className={`${styles.redZone} ${
+                  buttonDisabled ? styles.buttonDisabled : null
+                }`}
+                id="red"
+                disabled={buttonDisabled}
+                onClick={onSetChip}
+              >
+                {betOnChipRender.filter(item => item.key === '4')}4
+              </div>
+              <div
+                className={`${styles.blackZone} ${
+                  buttonDisabled ? styles.buttonDisabled : null
+                }`}
+                id="black"
+                disabled={buttonDisabled}
+                onClick={onSetChip}
+              >
+                {betOnChipRender.filter(item => item.key === '6')}6
+              </div>
+              <div
+                className={`${styles.redZone} ${
+                  buttonDisabled ? styles.buttonDisabled : null
+                }`}
+                id="red"
+                disabled={buttonDisabled}
+                onClick={onSetChip}
+              >
+                {betOnChipRender.filter(item => item.key === '8')}8
+              </div>
+            </div>
+            <div className={styles.groupZone}>
+              <div
+                className={`${styles.blackZone} ${
+                  buttonDisabled ? styles.buttonDisabled : null
+                }`}
+                id="black"
+                disabled={buttonDisabled}
+                onClick={onSetChip}
+              >
+                {betOnChipRender.filter(item => item.key === '2')}2
+              </div>
+              <div
+                className={`${styles.redZone} ${
+                  buttonDisabled ? styles.buttonDisabled : null
+                }`}
+                id="red"
+                disabled={buttonDisabled}
+                onClick={onSetChip}
+              >
+                {betOnChipRender.filter(item => item.key === '7')}7
+              </div>
+              <div
+                className={`${styles.blackZone} ${
+                  buttonDisabled ? styles.buttonDisabled : null
+                }`}
+                id="black"
+                disabled={buttonDisabled}
+                onClick={onSetChip}
+              >
+                {betOnChipRender.filter(item => item.key === '5')}5
+              </div>
+            </div>
+            <div className={styles.groupZone}>
+              <div
+                className={`${styles.allBlackZone} ${
+                  buttonDisabled ? styles.buttonDisabled : null
+                }`}
+                id="black"
+                disabled={buttonDisabled}
+                onClick={onSetChip}
+              >
+                {betOnChipRender.filter(item => item.key === 'AB')}
+                AB
+              </div>
+              <div
+                className={`${styles.allRedZone} ${
+                  buttonDisabled ? styles.buttonDisabled : null
+                }`}
+                id="red"
+                disabled={buttonDisabled}
+                onClick={onSetChip}
+              >
+                {betOnChipRender.filter(item => item.key === 'AR')}
+                AR
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
       <button
         className={`${styles.startGame} ${
           buttonDisabled ? styles.buttonDisabled : null
         }`}
-        id="spin"
-        onClick={spin}
         disabled={buttonDisabled}
+        onClick={clearChip}
       >
-        SPIN
+        CLEAR CHIP ZONE
       </button>
-
-      <div className={styles.container}>
-        <div className={styles.label}>
-          Your balance:
-          <div className={styles.value}>{balance}</div>
-        </div>
-
-        <div className={styles.label}>
-          Your current bet:
-          <div className={styles.value}>{!bet ? '-' : bet}</div>
-        </div>
-
-        <div className={styles.label}>
-          Your current win:
-          <div className={styles.value}>{!win ? '-' : win}</div>
-        </div>
-      </div>
-
       <div className={styles.containerLimit}>
         <div className={styles.groupZoneLimit}>
           <h2>Limits 'AR' and 'AB' bet</h2>
@@ -456,9 +725,6 @@ export default function GamePage() {
         </div>
       </div>
 
-      <div className={`${styles.container} ${styles.timer}`}>
-        SPIN VIA: {timer} seconds
-      </div>
       <div className={styles.container}>
         <button
           className={`${styles.autoStart} ${
@@ -469,6 +735,9 @@ export default function GamePage() {
         >
           Start Auto Spin
         </button>
+        <div className={`${styles.container} ${styles.timer}`}>
+          SPIN VIA: {timer} seconds
+        </div>
         <button
           className={`${styles.autoStart} ${
             buttonDisabled ? styles.buttonDisabled : null
@@ -479,190 +748,6 @@ export default function GamePage() {
           Stop Auto Spin
         </button>
       </div>
-
-      <button
-        className={`${styles.startGame} ${
-          buttonDisabled ? styles.buttonDisabled : null
-        }`}
-        disabled={buttonDisabled}
-        onClick={clearChip}
-      >
-        CLEAR CHIP
-      </button>
-
-      <div className={styles.gameField}>
-        <div className={styles.betZone}>
-          Your bet:
-          <div
-            className={`${styles.bet} ${styles.bet10} ${
-              activeBet[10] === 'active' ? styles.activeBet : null
-            } ${buttonDisabled ? styles.buttonDisabled : null}`}
-            disabled={buttonDisabled}
-            onClick={onSetBet}
-          >
-            10
-          </div>
-          <div
-            className={`${styles.bet} ${styles.bet20}  ${
-              activeBet[20] === 'active' ? styles.activeBet : null
-            } ${buttonDisabled ? styles.buttonDisabled : null}`}
-            disabled={buttonDisabled}
-            onClick={onSetBet}
-          >
-            20
-          </div>
-          <div
-            className={`${styles.bet} ${styles.bet50}  ${
-              activeBet[50] === 'active' ? styles.activeBet : null
-            } ${buttonDisabled ? styles.buttonDisabled : null}`}
-            disabled={buttonDisabled}
-            onClick={onSetBet}
-          >
-            50
-          </div>
-          <div
-            className={`${styles.bet} ${styles.bet100}  ${
-              activeBet[100] === 'active' ? styles.activeBet : null
-            } ${buttonDisabled ? styles.buttonDisabled : null}`}
-            disabled={buttonDisabled}
-            onClick={onSetBet}
-          >
-            100
-          </div>
-          <div
-            className={`${styles.bet} ${styles.bet150}  ${
-              activeBet[150] === 'active' ? styles.activeBet : null
-            } ${buttonDisabled ? styles.buttonDisabled : null}`}
-            disabled={buttonDisabled}
-            onClick={onSetBet}
-          >
-            150
-          </div>
-        </div>
-        <div className={styles.betChipZone}>
-          Chip zone
-          <div className={styles.groupZone}>
-            <div
-              className={`${styles.greenZone} ${
-                buttonDisabled ? styles.buttonDisabled : null
-              }`}
-              id="green"
-              disabled={buttonDisabled}
-              onClick={onSetChip}
-            >
-              {betOnChipRender.filter(item => item.key === '0')}0
-            </div>
-            <div
-              className={`${styles.redZone} ${
-                buttonDisabled ? styles.buttonDisabled : null
-              }`}
-              id="red"
-              disabled={buttonDisabled}
-              onClick={onSetChip}
-            >
-              {betOnChipRender.filter(item => item.key === '3')}3
-            </div>
-            <div
-              className={`${styles.blackZone} ${
-                buttonDisabled ? styles.buttonDisabled : null
-              }`}
-              id="black"
-              disabled={buttonDisabled}
-              onClick={onSetChip}
-            >
-              {betOnChipRender.filter(item => item.key === '1')}1
-            </div>
-          </div>
-          <div className={styles.groupZone}>
-            <div
-              className={`${styles.redZone} ${
-                buttonDisabled ? styles.buttonDisabled : null
-              }`}
-              id="red"
-              disabled={buttonDisabled}
-              onClick={onSetChip}
-            >
-              {betOnChipRender.filter(item => item.key === '4')}4
-            </div>
-            <div
-              className={`${styles.blackZone} ${
-                buttonDisabled ? styles.buttonDisabled : null
-              }`}
-              id="black"
-              disabled={buttonDisabled}
-              onClick={onSetChip}
-            >
-              {betOnChipRender.filter(item => item.key === '6')}6
-            </div>
-            <div
-              className={`${styles.redZone} ${
-                buttonDisabled ? styles.buttonDisabled : null
-              }`}
-              id="red"
-              disabled={buttonDisabled}
-              onClick={onSetChip}
-            >
-              {betOnChipRender.filter(item => item.key === '8')}8
-            </div>
-          </div>
-          <div className={styles.groupZone}>
-            <div
-              className={`${styles.blackZone} ${
-                buttonDisabled ? styles.buttonDisabled : null
-              }`}
-              id="black"
-              disabled={buttonDisabled}
-              onClick={onSetChip}
-            >
-              {betOnChipRender.filter(item => item.key === '2')}2
-            </div>
-            <div
-              className={`${styles.redZone} ${
-                buttonDisabled ? styles.buttonDisabled : null
-              }`}
-              id="red"
-              disabled={buttonDisabled}
-              onClick={onSetChip}
-            >
-              {betOnChipRender.filter(item => item.key === '7')}7
-            </div>
-            <div
-              className={`${styles.blackZone} ${
-                buttonDisabled ? styles.buttonDisabled : null
-              }`}
-              id="black"
-              disabled={buttonDisabled}
-              onClick={onSetChip}
-            >
-              {betOnChipRender.filter(item => item.key === '5')}5
-            </div>
-          </div>
-          <div className={styles.groupZone}>
-            <div
-              className={`${styles.allBlackZone} ${
-                buttonDisabled ? styles.buttonDisabled : null
-              }`}
-              id="black"
-              disabled={buttonDisabled}
-              onClick={onSetChip}
-            >
-              {betOnChipRender.filter(item => item.key === 'AB')}
-              AB
-            </div>
-            <div
-              className={`${styles.allRedZone} ${
-                buttonDisabled ? styles.buttonDisabled : null
-              }`}
-              id="red"
-              disabled={buttonDisabled}
-              onClick={onSetChip}
-            >
-              {betOnChipRender.filter(item => item.key === 'AR')}
-              AR
-            </div>
-          </div>
-        </div>
-      </div>
-    </>
+    </div>
   );
 }
