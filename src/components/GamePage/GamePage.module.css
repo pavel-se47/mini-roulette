@@ -552,7 +552,7 @@ h2 {
   margin: -15%;
   background-color: gold;
   color: #fff;
-  box-shadow: 0 0 0 8px currentColor, 0 0px 15px 5px rgba(0, 0, 0, 0.6);
+  box-shadow: 0 0 0 8px white, 0 0px 15px 5px rgba(0, 0, 0, 0.6);
   border-radius: 50%;
   transition: 1s;
 }
@@ -562,8 +562,9 @@ h2 {
   position: absolute;
   top: -17px;
   border: 10px solid transparent;
-  border-bottom-color: currentColor;
+  border-bottom-color: white;
   border-top: none;
+  z-index: 1;
 }
 
 .spin:hover,
@@ -593,16 +594,3 @@ h2 {
 .black {
   background-color: black;
 }
-
-/* @keyframes rotation {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-.componentRotate {
-  animation: rotation 5s linear infinite;
-} */
