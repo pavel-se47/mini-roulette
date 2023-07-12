@@ -276,23 +276,23 @@ h2 {
 }
 
 .bet10 {
-  background-color: darkorchid;
+  background-color: wheat;
 }
 
 .bet20 {
-  background-color: cyan;
+  background-color: yellowgreen;
 }
 
 .bet50 {
-  background-color: turquoise;
+  background-color: blue;
 }
 
 .bet100 {
-  background-color: chartreuse;
+  background-color: magenta;
 }
 
 .bet150 {
-  background-color: darkkhaki;
+  background-color: orange;
 }
 
 .betChipZone {
@@ -552,7 +552,7 @@ h2 {
   margin: -15%;
   background-color: gold;
   color: #fff;
-  box-shadow: 0 0 0 8px white, 0 0px 15px 5px rgba(0, 0, 0, 0.6);
+  box-shadow: 0 0 0 8px whitesmoke, 0 0px 15px 5px rgba(0, 0, 0, 0.6);
   border-radius: 50%;
   transition: 1s;
 }
@@ -562,7 +562,7 @@ h2 {
   position: absolute;
   top: -17px;
   border: 10px solid transparent;
-  border-bottom-color: white;
+  border-bottom-color: whitesmoke;
   border-top: none;
   z-index: 1;
 }
@@ -593,4 +593,26 @@ h2 {
 
 .black {
   background-color: black;
+}
+
+.rules h2 {
+  display: flex;
+  justify-content: center;
+  font-size: 18px;
+  color: black;
+  background-color: #f1f1f1;
+}
+
+.rules {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 5px;
+  padding: 5px;
+  width: 530px;
+  font-size: 14px;
+  color: black;
+  background-color: #f1f1f1;
 }

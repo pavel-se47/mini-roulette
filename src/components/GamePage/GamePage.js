@@ -454,7 +454,7 @@ export default function GamePage() {
             buttonDisabled
               ? {
                   transform: `rotate(${rotation}deg)`,
-                  transition: 'transform 3s ease-in-out',
+                  transition: 'transform 2s ease-in-out',
                 }
               : null
           }
@@ -486,7 +486,6 @@ export default function GamePage() {
           <span id="num5" className={styles.num5}>
             5
           </span>
-
           <div className={`${styles.option} ${styles.option1}`}>0</div>
           <div className={`${styles.option} ${styles.option2}`}>1</div>
           <div className={`${styles.option} ${styles.option3}`}>2</div>
@@ -512,6 +511,19 @@ export default function GamePage() {
             ? valueWheel?.value
             : 'SPIN'}
         </button>
+      </div>
+      <div className={styles.rules}>
+        <h2>Правила игры</h2>
+        <ul>
+          <li>Выберите фишку в поле "Your Bet", котрую хотите поставить</li>
+          <li>Сделайте ставку в "Chip Zone"</li>
+          <li>Нажмите кнопку "SPIN" или "Start Auto Spin"</li>
+          <li>
+            Колесо начнет крутится и укажет на выигрышный сектор и после
+            вернется в исходное положение. Номер и цвет выпавшего сектора
+            отобразится в центре круга до следующей Вашей ставки.
+          </li>
+        </ul>
       </div>
       <div>
         <div className={styles.container}>
