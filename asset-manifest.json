@@ -1,24 +1,24 @@
 {
   "files": {
     "main.css": "/mini-roulette/static/css/main.2678a8ef.css",
-    "main.js": "/mini-roulette/static/js/main.3e17b06a.js",
+    "main.js": "/mini-roulette/static/js/main.b2d5f4e6.js",
     "home-page.css": "/mini-roulette/static/css/home-page.5c8c271f.chunk.css",
     "home-page.js": "/mini-roulette/static/js/home-page.e8f75e0d.chunk.js",
-    "game-page.css": "/mini-roulette/static/css/game-page.e26e6161.chunk.css",
+    "game-page.css": "/mini-roulette/static/css/game-page.e6390468.chunk.css",
     "game-page.js": "/mini-roulette/static/js/game-page.5e859543.chunk.js",
     "static/js/819.cea27a4c.chunk.js": "/mini-roulette/static/js/819.cea27a4c.chunk.js",
     "static/media/mainLogo.png": "/mini-roulette/static/media/mainLogo.1737ff288d2c438daf16.png",
     "index.html": "/mini-roulette/index.html",
     "main.2678a8ef.css.map": "/mini-roulette/static/css/main.2678a8ef.css.map",
-    "main.3e17b06a.js.map": "/mini-roulette/static/js/main.3e17b06a.js.map",
+    "main.b2d5f4e6.js.map": "/mini-roulette/static/js/main.b2d5f4e6.js.map",
     "home-page.5c8c271f.chunk.css.map": "/mini-roulette/static/css/home-page.5c8c271f.chunk.css.map",
     "home-page.e8f75e0d.chunk.js.map": "/mini-roulette/static/js/home-page.e8f75e0d.chunk.js.map",
-    "game-page.e26e6161.chunk.css.map": "/mini-roulette/static/css/game-page.e26e6161.chunk.css.map",
+    "game-page.e6390468.chunk.css.map": "/mini-roulette/static/css/game-page.e6390468.chunk.css.map",
     "game-page.5e859543.chunk.js.map": "/mini-roulette/static/js/game-page.5e859543.chunk.js.map",
     "819.cea27a4c.chunk.js.map": "/mini-roulette/static/js/819.cea27a4c.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.2678a8ef.css",
-    "static/js/main.3e17b06a.js"
+    "static/js/main.b2d5f4e6.js"
   ]
 }
